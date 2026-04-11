@@ -1,8 +1,28 @@
 {
-  "name": "@LVPD-DS/my-awesome-lib",
+  {
+  "name": "@lvpd-ds/mods-mine",
   "version": "1.0.0",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+  "description": "Пакет модов для организации LVPD-DS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "https://github.com"
+  "publishConfig": {
+    "registry": "https://github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com"
+  },
+  "keywords": [
+    "minecraft",
+    "mods"
+  ],
+  "author": "LVPD-DS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com"
+  },
+  "homepage": "https://github.com"
 }
+
