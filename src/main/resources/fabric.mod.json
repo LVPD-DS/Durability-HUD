@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "durabilityhud",
+  "version": "${version}",
+  "name": "Durability HUD",
+  "description": "Displays item durability on the HUD screen.",
+  "authors": [
+    "YourName"
+  ],
+  "contact": {
+    "homepage": "https://github.com/yourname/durability-hud",
+    "sources": "https://github.com/yourname/durability-hud"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.durabilityhud.client.DurabilityHudClient"
+    ]
+  },
+  "mixins": [
+    "durabilityhud.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric-api": "*",
+    "minecraft": "1.16.5",
+    "java": ">=16"
+  }
+}
