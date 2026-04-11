@@ -23,11 +23,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 7.4.2
+      - name: Download Gradle Wrapper
+        run: |
+          mkdir -p gradle/wrapper
+          curl -L -o gradlew https://github.com/gradle/gradle/raw/v7.4.2/gradlew
+          curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v7.4.2/gradle/wrapper/gradle-wrapper.jar
+          chmod +x gradlew
+          cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-bin.zip
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          EOF
 
       - name: Build mod
         run: ./gradlew build
