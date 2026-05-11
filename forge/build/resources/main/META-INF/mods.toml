@@ -1,0 +1,26 @@
+modLoader   = "javafml"
+loaderVersion = "[47,)"   # Forge 1.21 uses FML 47+
+license     = "MIT"
+
+[[mods]]
+modId       = "durabilityhud"
+version     = "${file.jarVersion}"
+displayName = "Durability HUD"
+description = '''
+Displays item durability for all equipped items directly on the HUD.
+Shows main hand, off hand, and all four armour slots with a colour-coded bar.
+'''
+
+[[dependencies.durabilityhud]]
+    modId    = "forge"
+    mandatory = true
+    versionRange = "[51,)"
+    ordering = "NONE"
+    side     = "CLIENT"
+
+[[dependencies.durabilityhud]]
+    modId    = "minecraft"
+    mandatory = true
+    versionRange = "[1.21,1.22)"
+    ordering = "NONE"
+    side     = "CLIENT"

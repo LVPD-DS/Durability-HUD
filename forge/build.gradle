@@ -1,0 +1,52 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'maven-publish'
+}
+
+minecraft {
+    mappings channel: 'official', version: project.forge_minecraft_version
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                durabilityhud {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+base {
+    archivesName = "${project.archives_base_name}-forge-${project.forge_minecraft_version}"
+}
+
+repositories {
+    maven { url = "https://maven.minecraftforge.net/" }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.forge_version}"
+    implementation project(':common')
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'  : project.mod_id,
+            'Specification-Version': '1',
+            'Implementation-Title' : project.name,
+            'Implementation-Version': project.version,
+        ])
+    }
+    from('../common/src/main/java') {
+        include '**/*.java'
+    }
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

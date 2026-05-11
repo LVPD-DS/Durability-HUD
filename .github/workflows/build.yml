@@ -10,12 +10,13 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  build:
+  # ── Fabric 1.16.5 ────────────────────────────────────────────────────────────
+  build-fabric:
+    name: Build Fabric 1.16.5
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -23,25 +24,42 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Download Gradle Wrapper
-        run: |
-          mkdir -p gradle/wrapper
-          curl -L -o gradlew https://github.com/gradle/gradle/raw/v7.4.2/gradlew
-          curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v7.4.2/gradle/wrapper/gradle-wrapper.jar
-          chmod +x gradlew
-          cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
-          distributionBase=GRADLE_USER_HOME
-          distributionPath=wrapper/dists
-          distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-bin.zip
-          zipStoreBase=GRADLE_USER_HOME
-          zipStorePath=wrapper/dists
-          EOF
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Build mod
-        run: ./gradlew build
+      - name: Build Fabric subproject
+        run: ./gradlew :fabric:build
 
-      - name: Upload artifact
+      - name: Upload Fabric jar
         uses: actions/upload-artifact@v4
         with:
-          name: durability-hud-1.0.0
-          path: build/libs/durability-hud-1.0.0.jar
+          name: durability-hud-fabric-1.16.5
+          path: fabric/build/libs/durability-hud-fabric-1.16.5-*.jar
+          if-no-files-found: error
+
+  # ── Forge 1.21 ───────────────────────────────────────────────────────────────
+  build-forge:
+    name: Build Forge 1.21
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Forge subproject
+        run: ./gradlew :forge:build
+
+      - name: Upload Forge jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: durability-hud-forge-1.21
+          path: forge/build/libs/durability-hud-forge-1.21-*.jar
+          if-no-files-found: error
